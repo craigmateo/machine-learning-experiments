@@ -47,23 +47,14 @@ Experiments in this repository may include:
 
 machine-learning-experiments/
 ├── datasets/ # Raw and processed datasets (where permitted)
-
 ├── notebooks/ # Exploratory analyses and model experiments
-
 │ ├── regression/
-
 │ ├── classification/
-
 │ ├── clustering/
-
 │ └── dimensionality-reduction/
-
 ├── src/ # Reusable preprocessing, modeling, and evaluation code
-
 ├── experiments.md # Log of experiments, decisions, and observations
-
 └── README.md
-
 
 ---
 
