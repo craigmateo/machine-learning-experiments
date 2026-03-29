@@ -16,6 +16,13 @@ transform = transforms.Compose([
     transforms.Lambda(lambda x: x.view(-1))  # (1,28,28) → (784,)
 ])
 
+
+# Softmax
+
+def softmax(x):
+    exp_x = torch.exp(x)
+    return exp_x / torch.sum(exp_x, dim=1, keepdim=True)
+
 # -----------------------------
 # 2. LOAD DATA
 # -----------------------------
@@ -39,9 +46,12 @@ testloader  = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=False)
 # 10 outputs (digits 0–9)
 
 model = nn.Sequential(
-    nn.Linear(784, 128),  # weighted sum (like dot product)
-    nn.ReLU(),            # nonlinearity
-    nn.Linear(128, 10)    # output scores (logits)
+    nn.Linear(784, 128),
+    nn.ReLU(),
+    nn.Linear(128, 64),
+    nn.ReLU(),
+    nn.Linear(64, 10),
+    nn.LogSoftmax(dim=1)
 )
 
 # -----------------------------
@@ -51,7 +61,7 @@ model = nn.Sequential(
 # - combines softmax + log loss internally
 # - expects raw outputs (no softmax applied)
 
-criterion = nn.CrossEntropyLoss()
+criterion = nn.NLLLoss()
 
 # SGD = gradient descent optimizer
 optimizer = optim.SGD(model.parameters(), lr=0.1)
@@ -88,6 +98,7 @@ for e in range(epochs):
 correct = 0
 total = 0
 
+model.eval()
 with torch.no_grad():
     for images, labels in testloader:
         outputs = model(images)
@@ -125,7 +136,10 @@ image = image.unsqueeze(0)
 
 output = model(image)
 
+probs = softmax(output)
+
 # pick highest score = predicted digit
-_, predicted = torch.max(output, dim=1)
+_, predicted = torch.max(probs, dim=1)
 
 print("Predicted:", predicted.item())
+print(probs)
