@@ -26,11 +26,11 @@ def plot_decision_boundary(model, X, y, ax, title):
 
 ## Decision Tree on Simple Data
 
-""" Let’s start by training a decision tree on a synthetic dataset that is clean and linearly separable. 
+""" Let's start by training a decision tree on a synthetic dataset that is clean and linearly separable. 
 This type of data allows us to clearly see how the tree splits the feature space based on informative rules.
 
 In this scenario, we expect the decision tree to perform well, both in terms of accuracy and interpretability. 
-You’ll visualize the 2D decision boundary, then inspect the corresponding tree structure to see how each decision is made at various levels of the tree. """
+You'll visualize the 2D decision boundary, then inspect the corresponding tree structure to see how each decision is made at various levels of the tree. """
 
 # Generate data
 X, y = make_classification(n_samples=100, n_features=2, n_redundant=0,
