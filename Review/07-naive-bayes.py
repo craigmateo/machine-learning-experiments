@@ -58,6 +58,36 @@ results = pd.DataFrame({
 print(results.head())
 
 # Confusion Matrix
+from sklearn.metrics import confusion_matrix
+import pandas as pd
+
 cm = confusion_matrix(y_test, predictions)
 
-print(cm)
+cm_df = pd.DataFrame(
+    cm,
+    index=["Actual Died", "Actual Survived"],
+    columns=["Predicted Died", "Predicted Survived"]
+)
+
+print(cm_df)
+
+# Visualize the Confusion Matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(6,5))
+
+sns.heatmap(
+    cm,
+    annot=True,
+    fmt="d",
+    cmap="Blues",
+    xticklabels=["Died", "Survived"],
+    yticklabels=["Died", "Survived"]
+)
+
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Confusion Matrix")
+
+plt.show()
